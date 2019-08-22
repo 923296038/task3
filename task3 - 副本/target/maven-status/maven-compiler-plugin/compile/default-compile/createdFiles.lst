@@ -7,6 +7,7 @@ com\mapper\TypeMapper.class
 com\pojo\Type.class
 com\serviceImpl\MessageServiceImpl.class
 com\mapper\PasswordMapper.class
+com\pojo\Result.class
 com\mapper\MessageMapper.class
 com\service\AccountService.class
 com\mapper\RoleMapper.class

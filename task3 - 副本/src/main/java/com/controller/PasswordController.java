@@ -31,10 +31,16 @@ public class PasswordController {
         if(bindingResult.hasErrors()){
             for (ObjectError objectError:allErrors){
             }
-            return "error ! "+allErrors;
+            return "status: " + "500\r" +
+                    "message: " + allErrors+"\r" +
+                    "data: " + false;
         }
         boolean flag = passwordService.updatePassword(password);
-        if(flag){return "success!";}
-        else return "oops,error,please check"+allErrors;
+        if(flag){return "status: " + "200\r" +
+                "message: " + "success\r" +
+                "data: " + true;}
+        else return "status: " + "500\r" +
+                "message: " + "error\r" +
+                "data: " + false;
     }
 }

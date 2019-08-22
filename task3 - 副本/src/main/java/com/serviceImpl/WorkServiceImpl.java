@@ -19,7 +19,8 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public int insert(Work record) {
-        return workMapper.insert(record);
+        workMapper.insert(record);
+        return workMapper.getId(record.getWork_name());
     }
 
 

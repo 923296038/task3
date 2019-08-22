@@ -49,4 +49,7 @@
         select * from accounts where role = #{role}
     </select>
 
+    <select id="getId" resultType="java.lang.Integer" parameterType="string">
+        select id from accounts where account_name = #{account_name}
+    </select>
 </mapper>

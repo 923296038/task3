@@ -28,23 +28,30 @@ public class MessageController {
     public String findAllM(){
         List<Message> messageList = messageService.findAllMessage();
         log.error(messageList);
-        return ""+messageList;
+        return "status: " + "200\r" +
+                "message: " + "success\r" +
+                "data: " + messageList;
     }
     //根据作品查询留言
     @RequestMapping(value = "Messages/MessagesByName",method = RequestMethod.GET)
     @ResponseBody
-    public String MessageBN(HttpServletRequest request,String work_title,
-                            @Validated Message message,BindingResult bindingResult){
+    public String MessageBN(HttpServletRequest request,
+                            @RequestBody @Validated String work_title
+                            ,BindingResult bindingResult){
         if(work_title.length()==0&&bindingResult.hasErrors()){
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             for (ObjectError objectError:allErrors){
                 log.error(objectError.getDefaultMessage());
             }
-            return ""+allErrors;
+            return "status: " + "500\r" +
+                    "message: " + allErrors+"\r" +
+                    "data: " + "no results";
         }
         List<Message> messageList = messageService.findByWorkTitle(work_title);
         log.error(messageList);
-        return ""+messageList;
+        return "status: " + "200\r" +
+                "message: " + "success\r" +
+                "data: " + messageList;
     }
     //设为精选
     @RequestMapping(value = "Messages/Selected",method = RequestMethod.PUT)
@@ -52,7 +59,9 @@ public class MessageController {
     public String selected(Long id){
         messageService.upMessage(id);
         log.error("执行了精选"+id);
-        return "selected :" + id;
+        return "status: " + "200\r" +
+                "message: " + "success\r" +
+                "data: " + true;
     }
     //取精
     @RequestMapping(value = "Messages/unSelected",method = RequestMethod.PUT)
@@ -60,7 +69,9 @@ public class MessageController {
     public String unSelected(Long id){
         messageService.downMessage(id);
         log.error("unSelected"+id);
-        return "unselected : " + id;
+        return "status: " + "200\r" +
+                "message: " + "success\r" +
+                "data: " + true;
     }
     //回复留言
     @RequestMapping(value = "Messages/Response",method = RequestMethod.PUT)
@@ -71,18 +82,28 @@ public class MessageController {
         //同时设为精选留言
         messageService.upMessage(message.getId());
         Message message1 =messageService.findByID(message.getId());
-        return "MessageInfo"+message1;
+        return "status: " + "200\r" +
+                "message: " + "success\r" +
+                "data: " + true;
     }
     //删除留言
     @RequestMapping(value = "Messages/LesserMessages",
             method = RequestMethod.DELETE)
     @ResponseBody
-    public String LesserM(Long id){
+    public String LesserM(@RequestBody Long id){
         log.error("执行了删除方法,id:"+id);
         List<Message> messageList = messageService.findAllMessage();
         messageService.deleteMessage(id);
         List<Message> messageList1 = messageService.findAllMessage();
-        log.error("deleted"+(messageList.size()-messageList1.size())+"record");
-        return "deleted "+(messageList.size()-messageList1.size())+" record";
+        int flag = (messageList.size()-messageList1.size());
+        log.error("删除了 "+flag+" 条数据");
+        if (flag>0) {
+            return "status: " + "200\r" +
+                    "message: " + "success\r" +
+                    "data: " + true;
+        }
+        else return "status: " + "500\r" +
+                "message: " + "error\r" +
+                "data: " + false;
     }
 }

@@ -1,11 +1,16 @@
 package com.pojo;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.Size;
 
 public class Password {
     private String previous_pswd;
+    @NotBlank
     @Size(min=7,max=20,message = "长度大于6")
     private String new_pswd;
+    @NotBlank
+    @Size(min=7,max=20,message = "长度大于6")
     private String repeat_pswd;
 
     @Override

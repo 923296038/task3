@@ -289,6 +289,17 @@
     </dependency>
     <!--Json end-->
 
+    <!--responseBody不显示中文问题解决-->
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>1.8.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-core-asl</artifactId>
+      <version>1.8.10</version>
+    </dependency>
   </dependencies>
 
   <build>
